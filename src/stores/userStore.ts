@@ -12,6 +12,8 @@ export const useUserStore = defineStore('user', {
         last_activity: null,
         tel: null,
       },
+
+      
       
     }),
 
