@@ -4,18 +4,21 @@
             <AppToolBar />
         </header>
         <main class="main__main">
-            <AppFormEdit />
+            <AppAccount v-if="isOpenAccount" />
         </main>
 
-        
+
     </div>
 </template>
 
 
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import AppToolBar from './AppToolBar.vue';
-import AppFormEdit from './AppFormEdit.vue';
+import AppAccount from './AppAccount.vue';
+
+const isOpenAccount = ref(false);
 
 </script>
 
