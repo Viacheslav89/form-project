@@ -2,11 +2,15 @@ import { createRouter, createWebHistory } from 'vue-router'
 import App from '../App.vue'
 import MainPage from '../views/MainPage.vue'
 import LoginView from '../views/LoginView.vue'
+import AppAccount from './../components/AppAccount.vue'
+import AppUsers from './../components/AppUsers.vue'
+import AppInfo from './../components/AppInfo.vue'
+import AppMailing from '@/components/AppMailing.vue'
+import { useAdminStore } from './../stores/useAdminSrore';
 
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  
    routes: [
     {
       name: "Home",
@@ -23,10 +27,58 @@ const router = createRouter({
           name: "Main",
           path: "main",
           component: MainPage,
+          children: [
+            {
+              name: "Account",
+              path: "/main/account/",
+              component: AppAccount,
+            },
+            {
+              name: "Users",
+              path: "/main/users/",
+              component: AppUsers,
+            },
+            {
+              name: "Info",
+              path: "/main/info/",
+              component: AppInfo,
+            },
+            {
+              name: "Mailing",
+              path: "/main/mailing/",
+              component: AppMailing,
+            },
+
+          ]
         },
       ],
     },
   ]
 });
+
+
+router.beforeEach(async (to, from, next) => {
+  const adminStore = useAdminStore();
+  let isAccessed = adminStore.isAuthenticated;
+
+  if (!adminStore.isAuthenticated) {
+    try {
+      isAccessed = await adminStore.restoreSession();
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+  
+  if (!isAccessed && to.name !== 'Login') {
+    next({ name: 'Login' });
+    return;
+  } else if (isAccessed && to.name === 'Login') {
+    next({ name: 'Main' });
+    return;
+  }
+  
+  next();
+});
+
 
 export default router

@@ -33,12 +33,12 @@
 import { VForm } from 'vuetify/components'
 import { ref, watch, computed } from "vue"
 import type {  UserFormData } from "./../type"
-import { useUserStore } from "./../stores/userStore"
+import { useAdminStore } from "./../stores/useAdminSrore"
 import { useRouter } from "vue-router"
 import { useLoginForm } from "./../composables/useLoginForm"
 
 
-const userStore = useUserStore();
+const userStore = useAdminStore();
 const { errorMessage, login } = useLoginForm();
 const router = useRouter();
 
@@ -55,11 +55,10 @@ const clearForm = () => {
 
 const handleLogin = async () => {
   watch(
-    () => userStore.user.is_superuser,
+    () => userStore.user.isSuperuser,
     (newValue) => {
       if (newValue) {
         router.push({ name: 'Main' });
-        console.log("Перешли на главную страницу");
         clearForm();
       }
     }

@@ -18,8 +18,6 @@ import AppNavigationDrawers from '@/components/AppNavigationDrawers.vue';
 <style setup lang="scss">
 .main {
     min-height: 1200px;
-    // background-color: beige;
-
 }
 
 </style>

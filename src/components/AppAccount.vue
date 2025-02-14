@@ -5,14 +5,15 @@
         <v-form fast-fail @submit.prevent>
             <v-text-field label="Email" class="form__input" v-model="user.email"></v-text-field>
             <div class="form__fullname">
-                <v-text-field label="Имя" class="form__input"></v-text-field>
-                <v-text-field label="Фамилия" class="form__input"></v-text-field>
+                <!-- <v-text-field label="Имя" class="form__input"></v-text-field>
+                <v-text-field label="Фамилия" class="form__input"></v-text-field> -->
+                <v-text-field label="Имя пользователя" class="form__input" v-model="user.fullName"></v-text-field>
             </div>
 
             <!-- <VDateInput label="Дата рождения"></VDateInput> -->
 
             <v-btn class="mt-2" type="submit" color="grey" block 
-            @click="">Сохранить</v-btn>
+            @click="updateUser">Сохранить</v-btn>
         </v-form>
         </v-sheet>
         </div>
@@ -23,13 +24,22 @@
 
 <script setup lang="ts">
 import { VDateInput } from 'vuetify/labs/components';
+import { ref, watch } from 'vue';
+import { useAdminStore } from './../stores/useAdminSrore';
 
-import { useUserStore } from '@/stores/userStore';
+const userStore = useAdminStore();
 
-const userStore = useUserStore();
-const user = userStore.user;
+const user = ref({
+    ...userStore.user
+});
 
+const updateUser = () => {
+  userStore.user.fullName = user.value.fullName;
+};
 
+watch(() => userStore.user, (newValue) => {
+  user.value = newValue;
+});
 </script>
 
 
@@ -41,7 +51,7 @@ const user = userStore.user;
     &__fullname {
         display: flex;
         justify-content: space-between;
-        gap: 15px;
+        gap: 10px;
     }
 }
 

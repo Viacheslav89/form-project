@@ -4,10 +4,11 @@
             <AppToolBar />
         </header>
         <main class="main__main">
-            <AppAccount v-if="isOpenAccount" />
+            <AppAccount v-if="openPagesStore.openPages.isOpenAccaunt" />
+            <AppUsers v-if="openPagesStore.openPages.isOpenUsers" />
+            <AppInfo v-if="openPagesStore.openPages.isOpenInfo" />
+            <AppMailing v-if="openPagesStore.openPages.isOpenMailing" />
         </main>
-
-
     </div>
 </template>
 
@@ -17,8 +18,15 @@
 import { ref } from 'vue';
 import AppToolBar from './AppToolBar.vue';
 import AppAccount from './AppAccount.vue';
+import AppUsers from './../components/AppUsers.vue';
+import AppInfo from './../components/AppInfo.vue';
 
-const isOpenAccount = ref(false);
+
+import { usePageStatusStore } from './../stores/usePageStatusStore';
+import AppMailing from './AppMailing.vue';
+
+
+const openPagesStore = usePageStatusStore();
 
 </script>
 
@@ -35,7 +43,6 @@ const isOpenAccount = ref(false);
     &__main {
         padding: 0;
         margin: 0;
-        // background-color: rgb(184, 184, 184);
         min-height: 1000px;
     }
 }

@@ -3,7 +3,7 @@ export interface User {
     fullName: string;
     id: number | null;
     isActive: boolean;
-    isSuperruser: boolean;
+    isSuperuser: boolean;
     lastActivity: number | null;
     tel: number | null;
 };
@@ -13,3 +13,9 @@ export interface UserFormData {
     password: string;
 };
 
+export interface OpenPages {
+    isOpenAccaunt: boolean;
+    isOpenUsers: boolean;
+    isOpenInfo: boolean;
+    isOpenMailing: boolean;
+}

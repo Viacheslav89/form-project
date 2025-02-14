@@ -1,27 +1,27 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import type { User, UserFormData } from '@/type';
-import { useUserStore } from '@/stores/userStore';
+import { useAdminStore } from './../stores/useAdminSrore';
+import api from '@/plugins/api';
 
 // admin@axas.ru
 // 123123123
 
 export const useLoginForm = () => {
-
+  
   const errorMessage = ref('');
-  const userStore = useUserStore();
+  const userStore = useAdminStore();
   
   const login = async (userData: UserFormData) => {
     errorMessage.value = '';
     try {
-      const response = await axios.post('http://87.249.49.97:78/api/v1/sign-in/email-password/', userData);
+      const response = await api.post('sign-in/email-password/', userData);
 
       if (response.status === 200) {
         localStorage.setItem('token', response.data.data.token);
         userStore.updateUser(response.data.data.user);
         
         console.log(userStore.user);
-        console.log(response.data.data.token);
         console.log(response.status);
       }
 
