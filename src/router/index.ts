@@ -1,20 +1,19 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import App from '../App.vue'
-import MainPage from '../views/MainPage.vue'
-import LoginView from '../views/LoginView.vue'
-import AppAccount from './../components/AppAccount.vue'
-import AppUsers from './../components/AppUsers.vue'
-import AppInfo from './../components/AppInfo.vue'
-import AppMailing from '@/components/AppMailing.vue'
-import { useAdminStore } from './../stores/useAdminSrore';
-
+import { createRouter, createWebHistory } from "vue-router";
+import App from "../App.vue";
+import MainPage from "../views/MainPage.vue";
+import LoginView from "../views/LoginView.vue";
+import AppAccount from "../components/pages/AppAccount.vue";
+import AppUsers from "../components/pages/AppUsers.vue";
+import AppInfo from "../components/pages/AppInfo.vue";
+import AppMailing from "@/components/pages/AppMailing.vue";
+import { useAdminStore } from "./../stores/useAdminSrore";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-   routes: [
+  routes: [
     {
       name: "Home",
-      path: "/", 
+      path: "/",
       redirect: "login",
       component: App,
       children: [
@@ -48,14 +47,12 @@ const router = createRouter({
               path: "/main/mailing/",
               component: AppMailing,
             },
-
-          ]
+          ],
         },
       ],
     },
-  ]
+  ],
 });
-
 
 router.beforeEach(async (to, from, next) => {
   const adminStore = useAdminStore();
@@ -68,17 +65,16 @@ router.beforeEach(async (to, from, next) => {
       console.warn(error);
     }
   }
-  
-  if (!isAccessed && to.name !== 'Login') {
-    next({ name: 'Login' });
+
+  if (!isAccessed && to.name !== "Login") {
+    next({ name: "Login" });
     return;
-  } else if (isAccessed && to.name === 'Login') {
-    next({ name: 'Main' });
+  } else if (isAccessed && to.name === "Login") {
+    next({ name: "Main" });
     return;
   }
-  
+
   next();
 });
 
-
-export default router
+export default router;
