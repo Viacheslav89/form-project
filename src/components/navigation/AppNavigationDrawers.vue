@@ -48,8 +48,11 @@
 import { useAdminStore } from "../../stores/useAdminSrore";
 import { useRouter } from "vue-router";
 import { usePageStatusStore } from "@/stores/usePageStatusStore";
+import { useUsersStore } from "@/stores/useUsersStore";
 
 const userStore = useAdminStore();
+const usersStore = useUsersStore();
+
 const pageStatusStore = usePageStatusStore();
 const router = useRouter();
 
@@ -58,6 +61,7 @@ const openUsers = () => {
   pageStatusStore.updateOpenPages("isOpenUsers", true);
   if (router.currentRoute.value.name !== "Users") {
     router.push({ name: "Users" });
+    usersStore.getUsers();
   } else {
     router.push({ name: "Main" });
   }

@@ -55,26 +55,31 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const adminStore = useAdminStore();
-  let isAccessed = adminStore.isAuthenticated;
-
-  if (!adminStore.isAuthenticated) {
-    try {
-      isAccessed = await adminStore.restoreSession();
-    } catch (error) {
-      console.warn(error);
-    }
-  }
-
-  if (!isAccessed && to.name !== "Login") {
-    next({ name: "Login" });
-    return;
-  } else if (isAccessed && to.name === "Login") {
-    next({ name: "Main" });
-    return;
-  }
-
-  next();
-});
+     const adminStore = useAdminStore();
+     let isAccessed = adminStore.isAuthenticated;
+     
+     if (!adminStore.isAuthenticated) {
+       try {
+         isAccessed = await adminStore.restoreSession();
+       } catch (error) {
+         console.warn(error);
+         next(false);
+         return;
+       }
+     }
+     
+     if (!isAccessed && to.name !== "Login") {
+       next({ name: "Login" });
+       return;
+     } 
+     
+     if (isAccessed && to.name === "Login") {
+       localStorage.removeItem("token");
+       next({ name: "Home" });
+       return;
+     }
+     
+     next();
+   });
 
 export default router;

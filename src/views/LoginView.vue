@@ -4,13 +4,16 @@
     <div class="form__control">
       <v-sheet class="mx-auto" width="500" padding="300">
         <v-form fast-fail @submit.prevent>
+
           <v-text-field
             v-model="userData.email"
+            :rules="validationEmail"
             label="First name"
           ></v-text-field>
 
           <v-text-field
             v-model="userData.password"
+            :rules="validationPassword"
             label="Last name"
           ></v-text-field>
 
@@ -19,7 +22,7 @@
             type="submit"
             color="#32afc0"
             block
-            @click="loginFormStore.login(userData), handleLogin()"
+            @click="handleLogin()"
             >Войти</v-btn
           >
         </v-form>
@@ -49,21 +52,38 @@ const userData = ref<UserFormData>({
   password: "123123123",
 });
 
+const validationEmail = ref([
+  (value: string) => {
+    const re = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    re.test(String(value).toLowerCase());
+
+    if (re.test(String(value).toLowerCase())) return true;
+    return 'Введите корректный email';
+  }
+]);
+
+const validationPassword = ref([
+  (value: string) => {    
+    if (value.length >= 8) return true;
+    return 'Пароль должен быть не менее 8 символов';
+  }
+])
+
+
+
+
 const clearForm = () => {
   userData.value.email = "";
   userData.value.password = "";
 };
 
 const handleLogin = async () => {
-  watch(
-    () => userStore.user.isSuperuser,
-    (newValue) => {
-      if (newValue) {
-        router.push({ name: "Main" });
-        clearForm();
-      }
-    }
-  );
+  await loginFormStore.login(userData.value);
+
+  if (userStore.user.isSuperuser) {  
+    router.push({ name: "Main" });
+    clearForm();
+  }
 };
 </script>
 
