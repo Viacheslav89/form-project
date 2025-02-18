@@ -8,6 +8,7 @@ const isOpenPageInitial: OpenPages = {
   isOpenUsers: false,
   isOpenInfo: false,
   isOpenMailing: false,
+  isOpenCreateUserForm: false,
 };
 
 export const usePageStatusStore = defineStore("page", () => {
@@ -21,9 +22,14 @@ export const usePageStatusStore = defineStore("page", () => {
     openPages.value[key] = value;
   };
 
+  const toggleOpenPages = (key: keyof OpenPages) => {
+    openPages.value[key] = !openPages.value[key];
+  }
+
   return {
     openPages,
     closePages,
     updateOpenPages,
+    toggleOpenPages,
   };
 });

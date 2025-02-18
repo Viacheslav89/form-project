@@ -10,7 +10,7 @@ import api from "@/plugins/api";
 export const useLoginFormStore = () => {
   const errorMessage = ref("");
   const userStore = useAdminStore();
-  const status = ref<number | undefined>(undefined);
+
 
   const login = async (userData: UserFormData) => {
     errorMessage.value = "";
@@ -20,17 +20,14 @@ export const useLoginFormStore = () => {
       if (response.status === 200) {
         localStorage.setItem("token", response.data.data.token);
         userStore.updateUser(response.data.data.user);
-        status.value = response.status;
-
-        console.log(userStore.user);
-        console.log(response.status);
+        // console.log(userStore.user);
+        // console.log(response.status);
       }
 
       return response.status;
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         errorMessage.value = error.message;
-        status.value = error.response?.status;
 
         console.error(error.message);
         if (error.response) {
@@ -48,7 +45,6 @@ export const useLoginFormStore = () => {
 
   return {
     errorMessage,
-    status,
     login,
   };
 };

@@ -1,50 +1,42 @@
 <template>
-  <!-- <v-card> -->
+  <v-navigation-drawer expand-on-hover rail width="320">
+    <v-list>
+      <v-list-item
+        prepend-avatar=""
+        prepend-icon="mdi-menu"
+        :subtitle="userStore.user.email"
+        :title="userStore.user.fullName"
+      ></v-list-item>
+    </v-list>
 
-      <v-navigation-drawer expand-on-hover rail width="320">
-        <v-list>
-          <v-list-item
-            prepend-avatar=""
-            prepend-icon="mdi-menu"
-            :subtitle="userStore.user.email"
-            :title="userStore.user.fullName"
-          ></v-list-item>
-        </v-list>
+    <v-list density="compact" nav>
+      <v-list-item
+        prepend-icon="mdi-account-multiple"
+        title="Пользователи"
+        value="myfiles"
+        @click="openUsers"
+      ></v-list-item>
 
-        <v-list density="compact" nav>
-          <v-list-item
-            prepend-icon="mdi-account-multiple"
-            title="Пользователи"
-            value="myfiles"
-            @click="openUsers"
-          ></v-list-item>
+      <v-list-item
+        prepend-icon="mdi-information "
+        title="Информация"
+        value="shared"
+        color="gray"
+        @click="openInfo"
+      ></v-list-item>
 
-          <v-list-item
-            prepend-icon="mdi-information "
-            title="Информация"
-            value="shared"
-            color="gray"
-            @click="openInfo"
-          ></v-list-item>
-
-          <v-list-item
-            prepend-icon="mdi-star"
-            title="Рассылка"
-            value="starred"
-            @click="openMailing"
-          ></v-list-item>
-        </v-list>
-      </v-navigation-drawer>
-
-      <!-- <v-main style="min-height: 1500px">
-        <AppMain />
-      </v-main> -->
-
-  <!-- </v-card> -->
+      <v-list-item
+        prepend-icon="mdi-star"
+        title="Рассылка"
+        value="starred"
+        @click="openMailing"
+      ></v-list-item>
+    </v-list>
+  </v-navigation-drawer>
 </template>
 
 <script setup lang="ts">
-// import AppMain from "../layout/AppMain.vue";
+
 import { useAdminStore } from "../../stores/useAdminSrore";
 import { useRouter } from "vue-router";
 import { usePageStatusStore } from "@/stores/usePageStatusStore";

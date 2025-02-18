@@ -8,9 +8,8 @@
             class="form__input"
             v-model="user.email"
           ></v-text-field>
+
           <div class="form__fullname">
-            <!-- <v-text-field label="Имя" class="form__input"></v-text-field>
-                <v-text-field label="Фамилия" class="form__input"></v-text-field> -->
             <v-text-field
               label="Имя пользователя"
               class="form__input"
@@ -26,8 +25,8 @@
             color="grey"
             block
             @click="updateUser"
-            >Сохранить</v-btn
-          >
+            >Сохранить
+          </v-btn>
         </v-form>
       </v-sheet>
     </div>
@@ -35,9 +34,9 @@
 </template>
 
 <script setup lang="ts">
-import { VDateInput } from "vuetify/labs/components";
-import { ref, watch } from "vue";
-import { useAdminStore } from "../../stores/useAdminSrore";
+import { VDateInput } from 'vuetify/labs/components';
+import { ref, watch } from 'vue';
+import { useAdminStore } from '../../stores/useAdminSrore';
 
 const userStore = useAdminStore();
 

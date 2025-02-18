@@ -7,11 +7,12 @@ const userInitial = () => {
   return {
     email: "",
     fullName: "",
-    id: null,
+    id: 0,
     isActive: false,
     isSuperuser: false,
     lastActivity: null,
     tel: null,
+    password: "",
   };
 };
 
@@ -54,6 +55,7 @@ export const useAdminStore = defineStore("admin", () => {
   return {
     isAuthenticated,
     user,
+    userInitial,
     restoreSession,
     updateUser,
     resetUser,

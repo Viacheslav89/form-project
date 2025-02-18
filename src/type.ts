@@ -1,11 +1,12 @@
 export interface User {
   email: string;
   fullName: string;
-  id: number | null;
+  id: number;
   isActive: boolean;
   isSuperuser: boolean;
   lastActivity: number | null;
   tel: number | null;
+  password: string;
 }
 
 export interface UserFormData {
@@ -18,4 +19,14 @@ export interface OpenPages {
   isOpenUsers: boolean;
   isOpenInfo: boolean;
   isOpenMailing: boolean;
+  isOpenCreateUserForm: boolean;
+}
+
+export interface UserCreate {
+  email: string;
+  tel: string | null;
+  is_active: boolean;
+  is_superuser: boolean;
+  fullName: string;
+  password: string;
 }

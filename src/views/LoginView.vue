@@ -4,7 +4,6 @@
     <div class="form__control">
       <v-sheet class="mx-auto" width="500" padding="300">
         <v-form fast-fail @submit.prevent>
-
           <v-text-field
             v-model="userData.email"
             :rules="validationEmail"
@@ -36,20 +35,20 @@
 </template>
 
 <script setup lang="ts">
-import { VForm } from "vuetify/components";
-import { ref, watch, computed } from "vue";
-import type { UserFormData } from "./../type";
-import { useAdminStore } from "./../stores/useAdminSrore";
-import { useRouter } from "vue-router";
-import { useLoginFormStore } from "./../stores/useLoginFormStore";
+import { VForm } from 'vuetify/components';
+import { ref, watch, computed } from 'vue';
+import type { UserFormData } from './../type';
+import { useAdminStore } from './../stores/useAdminSrore';
+import { useRouter } from 'vue-router';
+import { useLoginFormStore } from './../stores/useLoginFormStore';
 
 const userStore = useAdminStore();
 const loginFormStore = useLoginFormStore();
 const router = useRouter();
 
 const userData = ref<UserFormData>({
-  email: "admin@axas.ru",
-  password: "123123123",
+  email: 'admin@axas.ru',
+  password: '123123123',
 });
 
 const validationEmail = ref([
@@ -59,29 +58,26 @@ const validationEmail = ref([
 
     if (re.test(String(value).toLowerCase())) return true;
     return 'Введите корректный email';
-  }
+  },
 ]);
 
 const validationPassword = ref([
-  (value: string) => {    
+  (value: string) => {
     if (value.length >= 8) return true;
     return 'Пароль должен быть не менее 8 символов';
-  }
-])
-
-
-
+  },
+]);
 
 const clearForm = () => {
-  userData.value.email = "";
-  userData.value.password = "";
+  userData.value.email = '';
+  userData.value.password = '';
 };
 
 const handleLogin = async () => {
   await loginFormStore.login(userData.value);
 
-  if (userStore.user.isSuperuser) {  
-    router.push({ name: "Main" });
+  if (userStore.user.isSuperuser) {
+    router.push({ name: 'Main' });
     clearForm();
   }
 };
