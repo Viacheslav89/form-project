@@ -26,38 +26,85 @@
         v-model="user.password"
       ></v-text-field>
 
-      <v-btn
-        class="mt-2"
-        type="submit"
-        color="grey"
-        block
-        @click="
-          usersStore.createUser(user),
-            (openPagesStore.openPages.isOpenCreateUserForm = false)
-        "
-        >Сохранить
-      </v-btn>
-    </v-form>
+      <div class="form__buttons">
+        <v-btn
+          class="form__button"
+          type="submit"
+          color="grey"
+          @click="takeUser(user)"
+          >{{ buttonTitle }}
+        </v-btn>
 
+        <v-btn
+          class="form__button"
+          type="submit"
+          color="grey"
+          @click="closeForm()"
+          >Отмена</v-btn
+        >
+      </div>
+    </v-form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useAdminStore } from '@/stores/useAdminSrore';
 import { useUsersStore } from '@/stores/useUsersStore';
 import { usePageStatusStore } from '@/stores/usePageStatusStore';
-import type { User } from '@/type';
+import type { User, UserCreate } from '@/type';
 
-const userStore = useAdminStore();
 const usersStore = useUsersStore();
 const openPagesStore = usePageStatusStore();
 
-const user = ref({
-  ...usersStore.userCreateInitial(),
-  email: 'test@mail.ru',
-  tel: '89180000000',
+const buttonTitle = computed(() => {
+  if (usersStore.currentUserId) {
+    return 'Редактировать';
+  }
+  return 'Создать';
 });
+
+const userData = computed(() => {
+  if (usersStore.currentUserId) {
+    const index = usersStore.usersList.findIndex(
+      (user) => user.id === usersStore.currentUserId
+    );
+    return {
+      ...usersStore.userCreateInitial(),
+      email: usersStore.usersList[index].email,
+      tel: usersStore.usersList[index].tel,
+      fullName: usersStore.usersList[index].fullName,
+      password: '',
+    };
+  } else {
+    return {
+      ...usersStore.userCreateInitial(),
+      email: 'test@mail.ru',
+      tel: '89180000000',
+    };
+  }
+});
+
+const user = ref<UserCreate>({
+  ...userData.value,
+});
+
+
+const closeForm = () => {
+  openPagesStore.openPages.isOpenCreateUserForm = false;
+  usersStore.currentUserId = null;
+};
+
+
+const takeUser = (updateUser: UserCreate) => {
+  if (usersStore.currentUserId) {
+    usersStore.editUser(usersStore.currentUserId, updateUser);
+  } else {
+    usersStore.createUser(updateUser);
+  }
+
+  closeForm();
+};
 
 const validationEmail = ref([
   (value: string) => {
@@ -70,4 +117,15 @@ const validationEmail = ref([
 ]);
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.form {
+  &__button {
+    width: 49%;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+</style>

@@ -17,6 +17,7 @@
             ></v-text-field>
           </div>
 
+
           <!-- <VDateInput label="Дата рождения"></VDateInput> -->
 
           <v-btn
@@ -24,9 +25,12 @@
             type="submit"
             color="grey"
             block
-            @click="updateUser"
+            @click="
+              updateUser(), openPagesStore.openPages.isOpenAccaunt = false
+            "
             >Сохранить
           </v-btn>
+
         </v-form>
       </v-sheet>
     </div>
@@ -37,8 +41,10 @@
 import { VDateInput } from 'vuetify/labs/components';
 import { ref, watch } from 'vue';
 import { useAdminStore } from '../../stores/useAdminSrore';
+import { usePageStatusStore } from '@/stores/usePageStatusStore';
 
 const userStore = useAdminStore();
+const openPagesStore = usePageStatusStore();
 
 const user = ref({
   ...userStore.user,

@@ -5,6 +5,7 @@ import type { User, UserCreate } from '../type';
 
 const userCreateInitial = (): UserCreate => {
   return {
+    // id: 0,
     email: '',
     tel: null,
     is_active: false,
@@ -15,19 +16,20 @@ const userCreateInitial = (): UserCreate => {
 };
 
 const usersList = ref<User[]>([]);
+const currentUserId = ref<number | null>(null);
 
 export const useUsersStore = defineStore('users', () => {
-  const getUsers = async () => {
+  const fetchDataUsers = async () => {
     try {
       const response = await api('users/');
-      console.log('response.data', response.data);
-      console.log('users', response.data.data);
       usersList.value = response.data.data;
-      console.log(usersList.value);
-        
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const setCurrentUser = (userId: number) => {
+    currentUserId.value = userId;
   };
 
   const createUser = async (user: UserCreate) => {
@@ -35,24 +37,45 @@ export const useUsersStore = defineStore('users', () => {
     try {
       const response = await api.post('users/', user);
       usersList.value.push(response.data.data);
-
-      console.log('usersList', usersList.value);
-      console.log(response.data);
-      console.log(response.status);
     } catch (error) {
       console.log(error);
     }
-    };
-    
-    const deleteUser = async (id: number) => {
-      try {
-        const response = await api.delete(`users/${id}/`);
-        const index = usersList.value.findIndex(user => user.id === id);
-        usersList.value.splice(index, 1);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  };
 
-  return { usersList, userCreateInitial, createUser, deleteUser, getUsers };
+  const editUser = async (userId: number, updateUser: UserCreate) => {
+    try {
+      const response = await api.put(`users/${userId}/`, updateUser);
+      const index = usersList.value.findIndex((user) => user.id === userId);
+      const currentUser = usersList.value[index];
+
+      usersList.value.splice(index, 1, {
+        ...currentUser,
+        ...updateUser,
+      }); ;
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteUser = async (userId: number) => {
+    try {
+      const response = await api.delete(`users/${userId}/`);
+      const index = usersList.value.findIndex((user) => user.id === userId);
+      usersList.value.splice(index, 1);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return {
+    usersList,
+    currentUserId,
+    userCreateInitial,
+    setCurrentUser,
+    createUser,
+    editUser,
+    deleteUser,
+    fetchDataUsers,
+  };
 });

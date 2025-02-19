@@ -12,7 +12,7 @@ const userInitial = () => {
     isSuperuser: false,
     lastActivity: null,
     tel: null,
-    password: "",
+    // password: "",
   };
 };
 
@@ -29,6 +29,8 @@ export const useAdminStore = defineStore("admin", () => {
     Object.assign(user.value, newUserData);
   };
 
+
+
   const restoreSession = async () => {
     const userStore = useAdminStore();
     try {
@@ -37,7 +39,6 @@ export const useAdminStore = defineStore("admin", () => {
         if (response.status === 200) {
           isAuthenticated.value = true;
           userStore.updateUser(response.data.data);
-          console.log(response.data.data);
         } else {
           isAuthenticated.value = false;
         }

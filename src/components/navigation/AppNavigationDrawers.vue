@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer expand-on-hover rail width="320">
+  <v-navigation-drawer expand-on-hover mobile-breakpoint="xs" rail>
     <v-list>
       <v-list-item
         prepend-avatar=""
@@ -53,7 +53,7 @@ const openUsers = () => {
   pageStatusStore.updateOpenPages("isOpenUsers", true);
   if (router.currentRoute.value.name !== "Users") {
     router.push({ name: "Users" });
-    usersStore.getUsers();
+    usersStore.fetchDataUsers();
   } else {
     router.push({ name: "Main" });
   }

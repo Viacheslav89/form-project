@@ -35,7 +35,7 @@ const openPagesStore = usePageStatusStore();
   &__main {
     padding: 0;
     margin: 0;
-    min-height: 1000px;
+    // min-height: 800px;
   }
 }
 </style>

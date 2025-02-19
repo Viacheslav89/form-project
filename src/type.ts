@@ -5,8 +5,8 @@ export interface User {
   isActive: boolean;
   isSuperuser: boolean;
   lastActivity: number | null;
-  tel: number | null;
-  password: string;
+  tel: string | null;
+  // password: string;
 }
 
 export interface UserFormData {
