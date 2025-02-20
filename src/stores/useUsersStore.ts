@@ -27,15 +27,18 @@ export const useUsersStore = defineStore('users', () => {
       console.log(error);
     }
   };
+  
 
   const setCurrentUser = (userId: number) => {
     currentUserId.value = userId;
   };
 
+
   const createUser = async (user: UserCreate) => {
-    console.log(user);
     try {
-      const response = await api.post('users/', user);
+      const response = await api.post('users/', {
+        ...user,
+      });
       usersList.value.push(response.data.data);
     } catch (error) {
       console.log(error);
@@ -51,8 +54,7 @@ export const useUsersStore = defineStore('users', () => {
       usersList.value.splice(index, 1, {
         ...currentUser,
         ...updateUser,
-      }); ;
-
+      });
     } catch (error) {
       console.log(error);
     }

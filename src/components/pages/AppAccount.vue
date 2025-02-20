@@ -17,20 +17,16 @@
             ></v-text-field>
           </div>
 
-
-          <!-- <VDateInput label="Дата рождения"></VDateInput> -->
-
           <v-btn
             class="mt-2"
             type="submit"
             color="grey"
             block
             @click="
-              updateUser(), openPagesStore.openPages.isOpenAccaunt = false
+              updateUser(), (openPagesStore.openPages.isOpenAccaunt = false)
             "
             >Сохранить
           </v-btn>
-
         </v-form>
       </v-sheet>
     </div>

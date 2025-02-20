@@ -1,5 +1,6 @@
 <template>
   <v-navigation-drawer expand-on-hover mobile-breakpoint="xs" rail>
+    
     <v-list>
       <v-list-item
         prepend-avatar=""
@@ -32,6 +33,7 @@
         @click="openMailing"
       ></v-list-item>
     </v-list>
+
   </v-navigation-drawer>
 </template>
 
@@ -51,6 +53,7 @@ const router = useRouter();
 const openUsers = () => {
   pageStatusStore.closePages();
   pageStatusStore.updateOpenPages("isOpenUsers", true);
+  if (router.currentRoute.value.name === "Users") return;
   if (router.currentRoute.value.name !== "Users") {
     router.push({ name: "Users" });
     usersStore.fetchDataUsers();
@@ -62,6 +65,7 @@ const openUsers = () => {
 const openInfo = () => {
   pageStatusStore.closePages();
   pageStatusStore.updateOpenPages("isOpenInfo", true);
+  if (router.currentRoute.value.name === "Info") return;
   if (router.currentRoute.value.name !== "Info") {
     router.push({ name: "Info" });
   } else {
@@ -72,6 +76,7 @@ const openInfo = () => {
 const openMailing = () => {
   pageStatusStore.closePages();
   pageStatusStore.updateOpenPages("isOpenMailing", true);
+  if (router.currentRoute.value.name === "Mailing") return;
   if (router.currentRoute.value.name !== "Mailing") {
     router.push({ name: "Mailing" });
   } else {

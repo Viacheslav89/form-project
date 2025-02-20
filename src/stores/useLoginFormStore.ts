@@ -1,28 +1,22 @@
-import { ref } from "vue";
-import axios from "axios";
-import type { User, UserFormData } from "@/type";
-import { useAdminStore } from "./../stores/useAdminSrore";
-import api from "@/plugins/api";
+import { ref } from 'vue';
+import axios from 'axios';
+import type { User, UserFormData } from '@/type';
+import { useAdminStore } from './../stores/useAdminSrore';
+import api from '@/plugins/api';
 
 // admin@axas.ru
 // 123123123
 
 export const useLoginFormStore = () => {
-  const errorMessage = ref("");
+  const errorMessage = ref('');
   const userStore = useAdminStore();
 
-
   const login = async (userData: UserFormData) => {
-    errorMessage.value = "";
+    errorMessage.value = '';
     try {
-      const response = await api.post("sign-in/email-password/", userData);
-
-      if (response.status === 200) {
-        localStorage.setItem("token", response.data.data.token);
-        userStore.updateUser(response.data.data.user);
-        // console.log(userStore.user);
-        // console.log(response.status);
-      }
+      const response = await api.post('sign-in/email-password/', userData);
+      localStorage.setItem('token', response.data.data.token);
+      userStore.updateUser(response.data.data.user);
 
       return response.status;
     } catch (error: unknown) {
@@ -33,7 +27,7 @@ export const useLoginFormStore = () => {
         if (error.response) {
           return error.response.status;
         } else {
-          console.error("Network error or no response received");
+          console.error('Network error or no response received');
           return 500;
         }
       } else {

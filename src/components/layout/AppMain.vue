@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="main">
     <header class="main__header">
       <AppToolBar />
@@ -18,9 +18,9 @@ import AppToolBar from "./AppToolBar.vue";
 import AppAccount from "../pages/AppAccount.vue";
 import AppUsers from "../pages/AppUsers.vue";
 import AppInfo from "../pages/AppInfo.vue";
+import AppMailing from "../pages/AppMailing.vue";
 
 import { usePageStatusStore } from "../../stores/usePageStatusStore";
-import AppMailing from "../pages/AppMailing.vue";
 
 const openPagesStore = usePageStatusStore();
 </script>
@@ -38,4 +38,4 @@ const openPagesStore = usePageStatusStore();
     // min-height: 800px;
   }
 }
-</style>
+</style> -->

@@ -1,7 +1,7 @@
-import { defineStore } from "pinia";
-import type { OpenPages } from "./../type";
-import { ref } from "vue";
-import { fa } from "vuetify/locale";
+import { defineStore } from 'pinia';
+import type { OpenPages } from './../type';
+import { ref } from 'vue';
+import { fa } from 'vuetify/locale';
 
 const isOpenPageInitial: OpenPages = {
   isOpenAccaunt: false,
@@ -11,7 +11,7 @@ const isOpenPageInitial: OpenPages = {
   isOpenCreateUserForm: false,
 };
 
-export const usePageStatusStore = defineStore("page", () => {
+export const usePageStatusStore = defineStore('page', () => {
   const openPages = ref<OpenPages>({ ...isOpenPageInitial });
 
   const closePages = () => {
@@ -24,7 +24,7 @@ export const usePageStatusStore = defineStore("page", () => {
 
   const toggleOpenPages = (key: keyof OpenPages) => {
     openPages.value[key] = !openPages.value[key];
-  }
+  };
 
   return {
     openPages,

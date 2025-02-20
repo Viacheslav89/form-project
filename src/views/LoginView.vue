@@ -66,6 +66,10 @@ const validationPassword = ref([
     if (value.length >= 8) return true;
     return 'Пароль должен быть не менее 8 символов';
   },
+  // async () => {
+  //   if (await loginFormStore.login(userData.value)) true;
+  //   return 'Неправильный логин или пароль';
+  // },
 ]);
 
 const clearForm = () => {

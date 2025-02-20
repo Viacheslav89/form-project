@@ -1,22 +1,21 @@
-import { defineStore } from "pinia";
-import api from "../plugins/api";
-import { ref } from "vue";
-import type { User } from "./../type";
+import { defineStore } from 'pinia';
+import api from '../plugins/api';
+import { ref } from 'vue';
+import type { User } from './../type';
 
 const userInitial = () => {
   return {
-    email: "",
-    fullName: "",
+    email: '',
+    fullName: '',
     id: 0,
     isActive: false,
     isSuperuser: false,
     lastActivity: null,
     tel: null,
-    // password: "",
   };
 };
 
-export const useAdminStore = defineStore("admin", () => {
+export const useAdminStore = defineStore('admin', () => {
   const isAuthenticated = ref(false);
   const user = ref<User>({ ...userInitial() });
 
@@ -29,13 +28,11 @@ export const useAdminStore = defineStore("admin", () => {
     Object.assign(user.value, newUserData);
   };
 
-
-
   const restoreSession = async () => {
     const userStore = useAdminStore();
     try {
-      if (localStorage.getItem("token")) {
-        const response = await api.get("/users/me/");
+      if (localStorage.getItem('token')) {
+        const response = await api.get('/users/me/');
         if (response.status === 200) {
           isAuthenticated.value = true;
           userStore.updateUser(response.data.data);

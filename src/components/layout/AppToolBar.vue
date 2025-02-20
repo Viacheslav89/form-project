@@ -39,7 +39,5 @@ const exitAccaunt = () => {
   router.push({ name: "Login" });
   pageStatusStore.closePages();
   localStorage.removeItem("token");
-  console.log("userStore.user", userStore.user);
-  console.log("token localStorage", localStorage.getItem("token"));
 };
 </script>

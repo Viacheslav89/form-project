@@ -1,20 +1,16 @@
 <template>
-  <div class="users" v-if="!openPagesStore.openPages.isOpenCreateUserForm">
+  <div class="users">
     <h1 class="users__title">Пользователи</h1>
 
     <div
       class="users__button"
-      v-if="!openPagesStore.openPages.isOpenCreateUserForm"
     >
       <v-btn
         class="mt-2"
         type="submit"
         color="grey"
         block
-        @click="
-          openPagesStore.openPages.isOpenCreateUserForm =
-            !openPagesStore.openPages.isOpenCreateUserForm
-        "
+        @click="toggleForm()"
       >
         Создать пользователя
       </v-btn>
@@ -27,40 +23,40 @@
             <th class="text-left">Имя</th>
             <th class="text-left">Email</th>
             <th class="text-left">Телефон</th>
-            <!-- <th class="text-left">Пароль</th> -->
-
+            <th class="text-left">Действия</th>
           </tr>
         </thead>
+
         <tbody>
           <tr v-for="user in usersStore.usersList">
             <td class="users__td">{{ user.fullName }}</td>
             <td class="users__td">{{ user.email }}</td>
             <td class="users__td">{{ user.tel }}</td>
-            <!-- <td class="users__td">{{ user.password }}</td> -->
+            <td>
+              <div class="users__buttons">
+                <v-btn
+                  fab
+                  icon
+                  size="x-small"
+                  class="users__btn"
+                  @click="usersStore.setCurrentUser(user.id), toggleForm()"
+                  v-if="!user.isSuperuser"
+                >
+                  <v-icon>mdi-square-edit-outline</v-icon>
+                </v-btn>
 
-            <div class="users__buttons">
-              <v-btn
-                fab
-                icon
-                size="x-small"
-                class="users__btn"
-                @click="openPagesStore.openPages.isOpenCreateUserForm = true, usersStore.setCurrentUser(user.id)"
-                v-if="!user.isSuperuser"
-              >
-                <v-icon>mdi-square-edit-outline</v-icon>
-              </v-btn>
-
-              <v-btn
-                fab
-                icon
-                size="x-small"
-                class="users__btn"
-                @click="usersStore.deleteUser(user.id)"
-                v-if="!user.isSuperuser"
-              >
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
-            </div>
+                <v-btn
+                  fab
+                  icon
+                  size="x-small"
+                  class="users__btn"
+                  @click="usersStore.deleteUser(user.id)"
+                  v-if="!user.isSuperuser"
+                >
+                  <v-icon>mdi-delete</v-icon>
+                </v-btn>
+              </div>
+            </td>
           </tr>
         </tbody>
       </v-table>
@@ -83,11 +79,18 @@ const openPagesStore = usePageStatusStore();
 onMounted(() => {
   usersStore.fetchDataUsers();
 });
+
+const toggleForm = () => {
+  openPagesStore.openPages.isOpenCreateUserForm =
+    !openPagesStore.openPages.isOpenCreateUserForm;
+};
 </script>
 
 <style scoped lang="scss">
 .users {
-  padding: 0 50px 0 70px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
 
   &__title {
     font-size: 30px;
@@ -104,8 +107,9 @@ onMounted(() => {
   }
 
   &__buttons {
-    margin-left: 30px;
+    width: 72px;
+    display: flex;
+    justify-content: space-between;
   }
-
 }
 </style>
