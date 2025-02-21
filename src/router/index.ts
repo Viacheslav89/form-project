@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { useAdminStore } from './../stores/useAdminSrore';
 
 import App from '../App.vue';
-import MainPage from '../views/MainPage.vue';
+import MainPage from '../views/MainView.vue';
 import LoginView from '../views/LoginView.vue';
 import AppAccount from '../components/pages/AppAccount.vue';
 import AppUsers from '../components/pages/AppUsers.vue';
@@ -73,9 +73,8 @@ router.beforeEach(async (to, from, next) => {
   }
 
   if (isAccessed && to.name === 'Login') {
-    localStorage.removeItem('token');
+    // localStorage.removeItem('token');
     next({ name: 'Main' });
-
     return;
   }
 

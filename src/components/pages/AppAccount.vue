@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { useAdminStore } from '../../stores/useAdminSrore';
-import MainPage from '@/views/MainPage.vue';
+import MainPage from '@/views/MainView.vue';
 
 const userStore = useAdminStore();
 import { useRouter } from 'vue-router';

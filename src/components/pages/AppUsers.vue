@@ -71,7 +71,7 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { useUsersStore } from '@/stores/useUsersStore';
 import AppUsersForm from '@/components/pages/AppUserForm.vue';
 import type { User } from './../../type';
-import MainPage from '@/views/MainPage.vue';
+import MainPage from '@/views/MainView.vue';
 
 const usersStore = useUsersStore();
 

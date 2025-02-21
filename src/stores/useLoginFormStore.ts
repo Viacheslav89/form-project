@@ -3,11 +3,14 @@ import axios from 'axios';
 import type { UserFormData } from '@/type';
 import { useAdminStore } from './../stores/useAdminSrore';
 import api from '@/plugins/api';
+import { fa } from 'vuetify/locale';
 
 // admin@axas.ru
 // 123123123
+const isCorrectFormData = ref<boolean>(true);
 
 export const useLoginFormStore = () => {
+  
   const errorMessage = ref('');
   const userStore = useAdminStore();
 
@@ -15,14 +18,15 @@ export const useLoginFormStore = () => {
     errorMessage.value = '';
     try {
       const response = await api.post('sign-in/email-password/', userData);
+      isCorrectFormData.value = true;
       localStorage.setItem('token', response.data.data.token);
       userStore.updateUser(response.data.data.user);
 
       return response.status;
     } catch (error: unknown) {
+      isCorrectFormData.value = false;
       if (axios.isAxiosError(error)) {
         errorMessage.value = error.message;
-
         console.error(error.message);
         if (error.response) {
           return error.response.status;
@@ -38,6 +42,7 @@ export const useLoginFormStore = () => {
   };
 
   return {
+    isCorrectFormData,
     errorMessage,
     login,
   };
