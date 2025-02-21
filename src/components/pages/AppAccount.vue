@@ -3,7 +3,7 @@
     <div class="form">
       <div class="form__wrapper">
         <v-sheet class="mx-auto" width="500" padding="300">
-          <v-form fast-fail @submit.prevent>
+          <v-form @submit.prevent="updateUser">
             <v-text-field
               label="Email"
               class="form__input"
@@ -23,7 +23,6 @@
               type="submit"
               color="grey"
               block
-              @click="updateUser"
               >Сохранить
             </v-btn>
           </v-form>
@@ -50,7 +49,7 @@ const user = ref({
 const updateUser = () => {
   userStore.user.fullName = user.value.fullName;
   if (router.currentRoute.value.name !== 'Account') return;
-  router.push({ name: 'Account' });
+  router.push({ name: 'Main' });
 };
 
 watch(

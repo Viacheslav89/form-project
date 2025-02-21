@@ -3,14 +3,10 @@ import axios from 'axios';
 import type { UserFormData } from '@/type';
 import { useAdminStore } from './../stores/useAdminSrore';
 import api from '@/plugins/api';
-import { fa } from 'vuetify/locale';
 
-// admin@axas.ru
-// 123123123
 const isCorrectFormData = ref<boolean>(true);
 
 export const useLoginFormStore = () => {
-  
   const errorMessage = ref('');
   const userStore = useAdminStore();
 

@@ -73,7 +73,6 @@ router.beforeEach(async (to, from, next) => {
   }
 
   if (isAccessed && to.name === 'Login') {
-    // localStorage.removeItem('token');
     next({ name: 'Main' });
     return;
   }

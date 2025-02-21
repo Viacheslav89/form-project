@@ -42,7 +42,6 @@ import { useUsersStore } from '@/stores/useUsersStore';
 
 const userStore = useAdminStore();
 const usersStore = useUsersStore();
-
 const router = useRouter();
 
 const openUsers = () => {

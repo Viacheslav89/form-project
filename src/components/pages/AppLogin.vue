@@ -41,12 +41,11 @@
 
 <script setup lang="ts">
 import { VForm } from 'vuetify/components';
-import { ref, watch, computed } from 'vue';
+import { ref, computed } from 'vue';
 import type { UserFormData } from './../../type';
 import { useAdminStore } from './../../stores/useAdminSrore';
 import { useLoginFormStore } from './../../stores/useLoginFormStore';
 import { useRouter } from 'vue-router';
-import { fa } from 'vuetify/locale';
 
 const userStore = useAdminStore();
 const loginFormStore = useLoginFormStore();

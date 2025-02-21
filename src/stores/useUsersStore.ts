@@ -5,7 +5,6 @@ import type { User, UserCreate } from '../type';
 
 const userCreateInitial = (): UserCreate => {
   return {
-    // id: 0,
     email: '',
     tel: null,
     is_active: false,

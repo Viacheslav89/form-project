@@ -14,7 +14,6 @@
 
 <script setup lang="ts">
 import { useAdminStore } from '../../stores/useAdminSrore';
-
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
