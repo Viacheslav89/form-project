@@ -17,6 +17,7 @@ const userCreateInitial = (): UserCreate => {
 
 const usersList = ref<User[]>([]);
 const currentUserId = ref<number | null>(null);
+const isOpenUpdateUserForm = ref(false);
 
 export const useUsersStore = defineStore('users', () => {
   const fetchDataUsers = async () => {
@@ -27,12 +28,6 @@ export const useUsersStore = defineStore('users', () => {
       console.log(error);
     }
   };
-  
-
-  const setCurrentUser = (userId: number) => {
-    currentUserId.value = userId;
-  };
-
 
   const createUser = async (user: UserCreate) => {
     try {
@@ -73,11 +68,12 @@ export const useUsersStore = defineStore('users', () => {
   return {
     usersList,
     currentUserId,
+    isOpenUpdateUserForm,
+
     userCreateInitial,
-    setCurrentUser,
+    fetchDataUsers,
     createUser,
     editUser,
     deleteUser,
-    fetchDataUsers,
   };
 });

@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import axios from 'axios';
-import type { User, UserFormData } from '@/type';
+import type { UserFormData } from '@/type';
 import { useAdminStore } from './../stores/useAdminSrore';
 import api from '@/plugins/api';
 

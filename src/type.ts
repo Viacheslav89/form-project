@@ -15,10 +15,6 @@ export interface UserFormData {
 }
 
 export interface OpenPages {
-  isOpenAccaunt: boolean;
-  isOpenUsers: boolean;
-  isOpenInfo: boolean;
-  isOpenMailing: boolean;
   isOpenCreateUserForm: boolean;
 }
 

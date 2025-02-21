@@ -1,10 +1,14 @@
 <template>
-  <div class="mailing">
-    <h1 class="mailing__title">Рассылка</h1>
-  </div>
+  <MainPage>
+    <div class="mailing">
+      <h1 class="mailing__title">Рассылка</h1>
+    </div>
+  </MainPage>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import MainPage from '@/views/MainPage.vue';
+</script>
 
 <style scoped lang="scss">
 .mailing {

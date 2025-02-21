@@ -1,46 +1,47 @@
 <template>
-  <div class="form">
-    <div class="form__wrapper">
-      <v-sheet class="mx-auto" width="500" padding="300">
-        <v-form fast-fail @submit.prevent>
-          <v-text-field
-            label="Email"
-            class="form__input"
-            v-model="user.email"
-          ></v-text-field>
-
-          <div class="form__fullname">
+  <MainPage>
+    <div class="form">
+      <div class="form__wrapper">
+        <v-sheet class="mx-auto" width="500" padding="300">
+          <v-form fast-fail @submit.prevent>
             <v-text-field
-              label="Имя пользователя"
+              label="Email"
               class="form__input"
-              v-model="user.fullName"
+              v-model="user.email"
             ></v-text-field>
-          </div>
 
-          <v-btn
-            class="mt-2"
-            type="submit"
-            color="grey"
-            block
-            @click="
-              updateUser(), (openPagesStore.openPages.isOpenAccaunt = false)
-            "
-            >Сохранить
-          </v-btn>
-        </v-form>
-      </v-sheet>
+            <div class="form__fullname">
+              <v-text-field
+                label="Имя пользователя"
+                class="form__input"
+                v-model="user.fullName"
+              ></v-text-field>
+            </div>
+
+            <v-btn
+              class="mt-2"
+              type="submit"
+              color="grey"
+              block
+              @click="updateUser"
+              >Сохранить
+            </v-btn>
+          </v-form>
+        </v-sheet>
+      </div>
     </div>
-  </div>
+  </MainPage>
 </template>
 
 <script setup lang="ts">
-import { VDateInput } from 'vuetify/labs/components';
 import { ref, watch } from 'vue';
 import { useAdminStore } from '../../stores/useAdminSrore';
-import { usePageStatusStore } from '@/stores/usePageStatusStore';
+import MainPage from '@/views/MainPage.vue';
 
 const userStore = useAdminStore();
-const openPagesStore = usePageStatusStore();
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const user = ref({
   ...userStore.user,
@@ -48,6 +49,8 @@ const user = ref({
 
 const updateUser = () => {
   userStore.user.fullName = user.value.fullName;
+  if (router.currentRoute.value.name !== 'Account') return;
+  router.push({ name: 'Account' });
 };
 
 watch(

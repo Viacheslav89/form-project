@@ -1,6 +1,5 @@
 <template>
   <v-navigation-drawer expand-on-hover mobile-breakpoint="xs" rail>
-    
     <v-list>
       <v-list-item
         prepend-avatar=""
@@ -33,54 +32,44 @@
         @click="openMailing"
       ></v-list-item>
     </v-list>
-
   </v-navigation-drawer>
 </template>
 
 <script setup lang="ts">
-
-import { useAdminStore } from "../../stores/useAdminSrore";
-import { useRouter } from "vue-router";
-import { usePageStatusStore } from "@/stores/usePageStatusStore";
-import { useUsersStore } from "@/stores/useUsersStore";
+import { useAdminStore } from '../../stores/useAdminSrore';
+import { useRouter } from 'vue-router';
+import { useUsersStore } from '@/stores/useUsersStore';
 
 const userStore = useAdminStore();
 const usersStore = useUsersStore();
 
-const pageStatusStore = usePageStatusStore();
 const router = useRouter();
 
 const openUsers = () => {
-  pageStatusStore.closePages();
-  pageStatusStore.updateOpenPages("isOpenUsers", true);
-  if (router.currentRoute.value.name === "Users") return;
-  if (router.currentRoute.value.name !== "Users") {
-    router.push({ name: "Users" });
+  if (router.currentRoute.value.name === 'Users') return;
+  if (router.currentRoute.value.name !== 'Users') {
+    router.push({ name: 'Users' });
     usersStore.fetchDataUsers();
   } else {
-    router.push({ name: "Main" });
+    router.push({ name: 'Main' });
   }
 };
 
 const openInfo = () => {
-  pageStatusStore.closePages();
-  pageStatusStore.updateOpenPages("isOpenInfo", true);
-  if (router.currentRoute.value.name === "Info") return;
-  if (router.currentRoute.value.name !== "Info") {
-    router.push({ name: "Info" });
+  if (router.currentRoute.value.name === 'Info') return;
+  if (router.currentRoute.value.name !== 'Info') {
+    router.push({ name: 'Info' });
   } else {
-    router.push({ name: "Main" });
+    router.push({ name: 'Main' });
   }
 };
 
 const openMailing = () => {
-  pageStatusStore.closePages();
-  pageStatusStore.updateOpenPages("isOpenMailing", true);
-  if (router.currentRoute.value.name === "Mailing") return;
-  if (router.currentRoute.value.name !== "Mailing") {
-    router.push({ name: "Mailing" });
+  if (router.currentRoute.value.name === 'Mailing') return;
+  if (router.currentRoute.value.name !== 'Mailing') {
+    router.push({ name: 'Mailing' });
   } else {
-    router.push({ name: "Main" });
+    router.push({ name: 'Main' });
   }
 };
 </script>

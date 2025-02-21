@@ -1,88 +1,86 @@
 <template>
-  <div class="users">
-    <h1 class="users__title">Пользователи</h1>
+  <MainPage>
+    <div class="users">
+      <h1 class="users__title">Пользователи</h1>
 
-    <div
-      class="users__button"
-    >
-      <v-btn
-        class="mt-2"
-        type="submit"
-        color="grey"
-        block
-        @click="toggleForm()"
-      >
-        Создать пользователя
-      </v-btn>
+      <div class="users__button">
+        <v-btn
+          class="mt-2"
+          type="submit"
+          color="grey"
+          block
+          @click="toggleForm()"
+        >
+          Создать пользователя
+        </v-btn>
+      </div>
+
+      <div class="user__table">
+        <v-table density="comfortable">
+          <thead>
+            <tr>
+              <th class="text-left">Имя</th>
+              <th class="text-left">Email</th>
+              <th class="text-left">Телефон</th>
+              <th class="text-left">Действия</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr v-for="user in usersStore.usersList">
+              <td class="users__td">{{ user.fullName }}</td>
+              <td class="users__td">{{ user.email }}</td>
+              <td class="users__td">{{ user.tel }}</td>
+              <td>
+                <div class="users__buttons">
+                  <v-btn
+                    fab
+                    icon
+                    size="x-small"
+                    class="users__btn"
+                    @click="(usersStore.currentUserId = user.id), toggleForm()"
+                    v-if="!user.isSuperuser"
+                  >
+                    <v-icon>mdi-square-edit-outline</v-icon>
+                  </v-btn>
+
+                  <v-btn
+                    fab
+                    icon
+                    size="x-small"
+                    class="users__btn"
+                    @click="usersStore.deleteUser(user.id)"
+                    v-if="!user.isSuperuser"
+                  >
+                    <v-icon>mdi-delete</v-icon>
+                  </v-btn>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </v-table>
+      </div>
     </div>
 
-    <div class="user__table">
-      <v-table density="comfortable">
-        <thead>
-          <tr>
-            <th class="text-left">Имя</th>
-            <th class="text-left">Email</th>
-            <th class="text-left">Телефон</th>
-            <th class="text-left">Действия</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr v-for="user in usersStore.usersList">
-            <td class="users__td">{{ user.fullName }}</td>
-            <td class="users__td">{{ user.email }}</td>
-            <td class="users__td">{{ user.tel }}</td>
-            <td>
-              <div class="users__buttons">
-                <v-btn
-                  fab
-                  icon
-                  size="x-small"
-                  class="users__btn"
-                  @click="usersStore.setCurrentUser(user.id), toggleForm()"
-                  v-if="!user.isSuperuser"
-                >
-                  <v-icon>mdi-square-edit-outline</v-icon>
-                </v-btn>
-
-                <v-btn
-                  fab
-                  icon
-                  size="x-small"
-                  class="users__btn"
-                  @click="usersStore.deleteUser(user.id)"
-                  v-if="!user.isSuperuser"
-                >
-                  <v-icon>mdi-delete</v-icon>
-                </v-btn>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </v-table>
-    </div>
-  </div>
-
-  <AppUsersForm v-if="openPagesStore.openPages.isOpenCreateUserForm" />
+    <AppUsersForm v-if="usersStore.isOpenUpdateUserForm" />
+  </MainPage>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue';
 import { useUsersStore } from '@/stores/useUsersStore';
-import { usePageStatusStore } from '@/stores/usePageStatusStore';
 import AppUsersForm from '@/components/pages/AppUserForm.vue';
 import type { User } from './../../type';
+import MainPage from '@/views/MainPage.vue';
 
 const usersStore = useUsersStore();
-const openPagesStore = usePageStatusStore();
 
 onMounted(() => {
   usersStore.fetchDataUsers();
 });
 
 const toggleForm = () => {
-  openPagesStore.openPages.isOpenCreateUserForm =
-    !openPagesStore.openPages.isOpenCreateUserForm;
+  usersStore.isOpenUpdateUserForm = !usersStore.isOpenUpdateUserForm;
 };
 </script>
 

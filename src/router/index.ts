@@ -9,52 +9,6 @@ import AppUsers from '../components/pages/AppUsers.vue';
 import AppInfo from '../components/pages/AppInfo.vue';
 import AppMailing from '@/components/pages/AppMailing.vue';
 
-// const router = createRouter({
-//   history: createWebHistory(import.meta.env.BASE_URL),
-//   routes: [
-//     {
-//       name: 'Home',
-//       path: '/',
-//       redirect: { name: 'Login' },
-//       component: App,
-//       children: [
-//         {
-//           name: 'Login',
-//           path: 'login',
-//           component: LoginView,
-//         },
-//         {
-//           name: 'Main',
-//           path: 'main',
-//           component: MainPage,
-//           children: [
-//             {
-//               name: 'Account',
-//               path: 'account',
-//               component: AppAccount,
-//             },
-//             {
-//               name: 'Users',
-//               path: 'users',
-//               component: AppUsers,
-//             },
-//             {
-//               name: 'Info',
-//               path: 'info',
-//               component: AppInfo,
-//             },
-//             {
-//               name: 'Mailing',
-//               path: 'mailing',
-//               component: AppMailing,
-//             },
-//           ],
-//         },
-//       ],
-//     },
-//   ],
-// });
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -120,7 +74,8 @@ router.beforeEach(async (to, from, next) => {
 
   if (isAccessed && to.name === 'Login') {
     localStorage.removeItem('token');
-    next({ name: 'Login' });
+    next({ name: 'Main' });
+
     return;
   }
 

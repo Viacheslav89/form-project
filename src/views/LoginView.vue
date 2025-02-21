@@ -3,7 +3,7 @@
     <h1 class="form__title">Добро пожаловать</h1>
     <div class="form__control">
       <v-sheet class="mx-auto" width="500" padding="300">
-        <v-form fast-fail @submit.prevent>
+        <v-form @submit.prevent>
           <v-text-field
             v-model="userData.email"
             :rules="validationEmail"
@@ -21,7 +21,7 @@
             type="submit"
             color="#32afc0"
             block
-            @click="handleLogin()"
+            @click="handleLogin(), verification()"
             >Войти</v-btn
           >
         </v-form>
@@ -45,11 +45,31 @@ import { useLoginFormStore } from './../stores/useLoginFormStore';
 const userStore = useAdminStore();
 const loginFormStore = useLoginFormStore();
 const router = useRouter();
+const isVerification = ref(true);
 
 const userData = ref<UserFormData>({
   email: 'admin@axas.ru',
   password: '123123123',
 });
+
+const verification = async () => {
+  if (await loginFormStore.login(userData.value)) {
+    isVerification.value = false;
+  } else {
+    isVerification.value = true;
+  }
+};
+
+watch(
+  () => isVerification.value,
+  (newValue) => {
+    console.log(newValue);
+    if (!newValue) {
+      isVerification.value = newValue;
+      console.log(isVerification.value);
+    }
+  }
+);
 
 const validationEmail = ref([
   (value: string) => {
@@ -59,17 +79,23 @@ const validationEmail = ref([
     if (re.test(String(value).toLowerCase())) return true;
     return 'Введите корректный email';
   },
+  () => {
+    if (isVerification.value) return true;
+    console.log('isVerification.value', isVerification.value);
+    return 'Неверный логин или пароль';
+  },
 ]);
 
 const validationPassword = ref([
+  () => {
+    if (isVerification.value) return true;
+    console.log('isVerification.value', isVerification.value);
+    return 'Неверный логин или пароль';
+  },
   (value: string) => {
     if (value.length >= 8) return true;
     return 'Пароль должен быть не менее 8 символов';
   },
-  // async () => {
-  //   if (await loginFormStore.login(userData.value)) true;
-  //   return 'Неправильный логин или пароль';
-  // },
 ]);
 
 const clearForm = () => {

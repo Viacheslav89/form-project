@@ -1,9 +1,6 @@
 <template>
   <div class="pa-4 text-center">
-    <v-dialog
-      v-model="openPagesStore.openPages.isOpenCreateUserForm"
-      max-width="600"
-    >
+    <v-dialog v-model="usersStore.isOpenUpdateUserForm" max-width="600">
       <v-form ref="form">
         <v-card prepend-icon="mdi-account" title="User Profile">
           <v-card-text>
@@ -62,7 +59,6 @@
               variant="tonal"
               @click="takeUser(user)"
             ></v-btn>
-            
           </v-card-actions>
         </v-card>
       </v-form>
@@ -72,13 +68,10 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
-import { useAdminStore } from '@/stores/useAdminSrore';
 import { useUsersStore } from '@/stores/useUsersStore';
-import { usePageStatusStore } from '@/stores/usePageStatusStore';
-import type { User, UserCreate } from '@/type';
+import type { UserCreate } from '@/type';
 
 const usersStore = useUsersStore();
-const openPagesStore = usePageStatusStore();
 const form = ref();
 
 const buttonTitle = computed(() => {
@@ -113,7 +106,7 @@ const user = ref<UserCreate>({
 });
 
 const closeForm = () => {
-  openPagesStore.openPages.isOpenCreateUserForm = false;
+  usersStore.isOpenUpdateUserForm = false;
   usersStore.currentUserId = null;
 };
 

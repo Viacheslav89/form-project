@@ -1,10 +1,14 @@
 <template>
-  <div class="info">
-    <h1 class="info__title">Информация</h1>
-  </div>
+  <MainPage>
+    <div class="info">
+      <h1 class="info__title">Информация</h1>
+    </div>
+  </MainPage>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import MainPage from '@/views/MainPage.vue';
+</script>
 
 <style scoped lang="scss">
 .info {
